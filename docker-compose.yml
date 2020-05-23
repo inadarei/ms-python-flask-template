@@ -1,0 +1,39 @@
+version: "3.4"
+
+services:
+  ms-template-microservice:
+    container_name: ms-template-microservice
+    build:
+      context: .
+    restart: always
+    volumes:
+      - ./:/app
+    ports:
+      - 7701:5000
+    env_file:
+      - ./database-dev.env
+    environment:
+      FLASK_ENV: development
+    links:
+      - ms-redis
+    command: ./wait-for.sh -t 60 ms-redis:6379 -- gunicorn -b 0.0.0.0:5000 --reload -w 1 service:app
+
+  ms-redis:
+    container_name: ms-redis
+    image: redis:alpine
+    restart: always
+    command: redis-server --requirepass 4n_ins3cure_P4ss
+    ### you only need to host-map this port if you have an app (DB GUI Editor?)
+    ### on host that needs access to the Redis DB. Otherwise, keep it commented.
+    #ports:
+    #  - "6379:6379"
+    expose:
+      - 6379
+    volumes:
+      - local_redis_data:/var/lib/redis
+      #- $PWD/redis.conf:/usr/local/etc/redis/redis.conf
+    environment:
+      - REDIS_REPLICATION_MODE=master
+
+volumes:
+  local_redis_data:

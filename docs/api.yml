@@ -1,0 +1,97 @@
+openapi: 3.0.0
+info:
+  title: Microservice Spec
+  description: |
+    Open API Spec for The Sample Python Microservice
+  version: 1.0.0
+servers:
+  - url: http://api.example.com/v1
+    description: Production Server
+paths:
+  /users:
+    post:
+      summary: Create a user
+      description: |
+        Example request:
+        ```
+          POST http://0.0.0.0:7701/users
+        ```
+      responses:
+        '200':    # success response
+          description: Successful Response
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  completion:
+                    type: object
+                    properties: 
+                      status:
+                        type: string
+                        enum: ["success", "error"]
+                      user_id: 
+                        type: string
+                example: 
+                  - completion: 
+                      status: "success"
+                      user_id: "53e0cd62-9d35-11ea-a264-cf3d170562c2"
+  /users/{user_id}:
+    post:
+      summary: Update a user
+      description: |
+        Example request:
+        ```
+          POST http://0.0.0.0:7701/users/1234-56789-abcde
+        ```
+      parameters:
+        - name: user_id
+          required: true
+          in: path
+          description: User ID.
+          schema: 
+            type : string
+          example: 53e0cd62-9d35-11ea-a264-cf3d170562c2
+                  
+      responses:
+        '200':    # success response
+          description: Successful Response
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  completion:
+                    type: object
+                    properties: 
+                      status:
+                        type: string
+                        enum: ["success", "error"]
+                      user_id: 
+                        type: string
+                example: 
+                  - completion: 
+                      status: "success"
+                      user_id: "53e0cd62-9d35-11ea-a264-cf3d170562c2"
+
+                    
+  /hello/{name}:
+    get:
+      summary: Greeter Endpoint
+      parameters:
+        - name: name
+          in: path
+          required: true
+          description: Name of the person to greet.
+          schema: 
+            type : string
+          example: Mary
+
+      responses:
+        '200':    # success response
+          description: Successful Response
+          content:
+             text/plain:
+              schema:
+                type: string
+                example: Hello, Mary!
