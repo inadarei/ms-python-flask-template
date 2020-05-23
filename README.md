@@ -1,6 +1,11 @@
 # ms-python-flask-template
 A template project for a flask-based Python microservice
 
+## Prerequisites:
+
+1. Working Docker environment
+2. GNU Make
+
 ## Commands:
 
 1. make  - build, start, and watch logs
