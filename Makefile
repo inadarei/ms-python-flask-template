@@ -60,4 +60,4 @@ deps:
 
 .PHONY: lint
 lint: 
-	docker-compose exec ${service} pylint service.py src/**/*
+	docker-compose exec ${service} pylint service.py src/*.py
