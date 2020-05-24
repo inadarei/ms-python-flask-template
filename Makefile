@@ -57,3 +57,7 @@ add: install-package-in-container build
 .PHONY: deps
 deps:
 	docker-compose exec ${service} pip install -r requirements.txt	
+
+.PHONY: lint
+lint: 
+	docker-compose exec ${service} pylint service.py src/**/*
