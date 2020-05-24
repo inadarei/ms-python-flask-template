@@ -52,7 +52,7 @@ install-package-in-container:
 	docker-compose exec ${service} pip freeze > requirements.txt
 
 .PHONY: add
-add: install-package-in-container build
+add: start install-package-in-container build
 
 .PHONY: deps
 deps:

@@ -20,5 +20,4 @@ A template project for a flask-based Python microservice
 10. make lint - pylint code
 11. make test - run unit and functional tests
 12. `make add package="pytest"` - adds a module (in this case: "pytest") inside
-a running container and saves it to the requirements.txt. Warning: a container
-must be running!
+a running container and saves it to the requirements.txt.
