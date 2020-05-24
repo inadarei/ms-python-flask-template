@@ -3,18 +3,18 @@ default: start logs
 service:=ms-template-microservice
 
 .PHONY: start
-start: 
+start:
 	docker-compose up -d
 
 .PHONY: stop
-stop: 
+stop:
 	docker-compose down
 
 .PHONY: restart
 restart: stop start
 
 .PHONY: ps
-ps: 
+ps:
 	docker-compose ps
 
 .PHONY: logs
@@ -29,12 +29,12 @@ logs-db:
 logs-app:
 	docker-compose logs -f ${service}
 
-# connect to redis cli for debugging 
+# connect to redis cli for debugging
 .PHONY: redis
 redis:
 	docker exec -it ms-redis redis-cli -a 4n_ins3cure_P4ss
 
-# connect to the microservice cli for debugging 
+# connect to the microservice cli for debugging
 .PHONY: shell
 shell:
 	docker-compose exec ${service} bash
@@ -52,12 +52,19 @@ install-package-in-container:
 	docker-compose exec ${service} pip freeze > requirements.txt
 
 .PHONY: add
-add: install-package-in-container build	
+add: install-package-in-container build
 
 .PHONY: deps
 deps:
-	docker-compose exec ${service} pip install -r requirements.txt	
+	docker-compose exec ${service} pip install -r requirements.txt
 
 .PHONY: lint
-lint: 
-	docker-compose exec ${service} pylint service.py src/*.py
+lint:
+	docker-compose exec ${service} pylint service.py src/*.py tests/**/*.py
+
+.PHONY: test
+test: start test-run-only
+
+.PHONY: test-run-only
+test-run-only:
+	docker-compose exec ${service} pytest

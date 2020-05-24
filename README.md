@@ -16,4 +16,9 @@ A template project for a flask-based Python microservice
 6. make redis - launch redis cli for debugging
 7. make logs - tail combined logs from the service and the db
 8. make logs-app
-9. make logs-db 
+9. make logs-db
+10. make lint - pylint code
+11. make test - run unit and functional tests
+12. `make add package="pytest"` - adds a module (in this case: "pytest") inside
+a running container and saves it to the requirements.txt. Warning: a container
+must be running!
