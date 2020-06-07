@@ -17,7 +17,8 @@ REDIS_PWD = env_var("REDIS_PWD", '')
 # pylint: disable=invalid-name
 this = sys.modules[__name__]
 this.redis_conn = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, \
-                              db=REDIS_DB, password=REDIS_PWD)
+                              db=REDIS_DB, password=REDIS_PWD,
+                              decode_responses=True)
 
 def save_user(user, user_id):
     """Saves user into redis database"""
