@@ -20,9 +20,9 @@ services:
 
   ms-redis:
     container_name: ms-redis
-    image: redis:alpine
+    image: redis:6-alpine
     restart: always
-    command: redis-server --requirepass 4n_ins3cure_P4ss
+    command: redis-server /usr/local/etc/redis/redis.conf --requirepass 4n_ins3cure_P4ss
     ### you only need to host-map this port if you have an app (DB GUI Editor?)
     ### on host that needs access to the Redis DB. Otherwise, keep it commented.
     #ports:
@@ -30,8 +30,8 @@ services:
     expose:
       - 6379
     volumes:
-      - local_redis_data:/var/lib/redis
-      #- $PWD/redis.conf:/usr/local/etc/redis/redis.conf
+      - local_redis_data:/data
+      - $PWD/redis.conf:/usr/local/etc/redis/redis.conf
     environment:
       - REDIS_REPLICATION_MODE=master
 
